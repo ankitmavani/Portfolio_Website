@@ -1,4 +1,4 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
+
 
 # please create complete 30 day markdown file
 
@@ -11,7 +11,7 @@ You can copy-paste this directly into your markdown editor.
 
 # 📚 30-Day Node.js Mastery Tracker
 
-Each row = 1 day. Track your progress with ✅.
+ - [ ] Each row = 1 day. Track your progress with ✅.
 
 ***
 
@@ -19,7 +19,7 @@ Each row = 1 day. Track your progress with ✅.
 
 **Subtopics:**
 
-- Event loop
+- [Event loop](http://localhost:5173/markdown?file=Nodejs/Demo)
 - Libuv \& thread pool
 - Call stack \& queues
 - Microtasks vs Macrotasks
