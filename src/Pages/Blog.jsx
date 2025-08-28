@@ -1,172 +1,89 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { ChevronRight, ChevronDown } from "lucide-react";
 
-function Blog() {
+const treeData = [
+  {
+    name: "src",
+    type: "folder",
+    children: [
+      {
+        name: "components",
+        type: "folder",
+        children: [
+          { name: "Header.jsx", type: "file" },
+          { name: "Footer.jsx", type: "file" },
+        ],
+      },
+      {
+        name: "pages",
+        type: "folder",
+        children: [
+          { name: "Home.jsx", type: "file" },
+          { name: "About.jsx", type: "file" },
+        ],
+      },
+      { name: "App.js", type: "file" },
+      { name: "index.js", type: "file" },
+    ],
+  },
+  {
+    name: "public",
+    type: "folder",
+    children: [{ name: "index.html", type: "file" }],
+  },
+  { name: "package.json", type: "file" },
+];
+
+const TreeNode = ({ node, level = 0 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const hasChildren = node.type === "folder" && node.children?.length > 0;
+
   return (
-    <article className="blog" data-page="blog">
+    <div>
+      {/* Row */}
+      <div
+        className="flex items-center cursor-pointer select-none hover:bg-white/5 rounded-sm"
+        style={{ paddingLeft: `${level * 16}px` }}
+        onClick={() => hasChildren && setIsOpen(!isOpen)}
+      >
+        {/* Arrow toggle */}
+        {hasChildren ? (
+          isOpen ? (
+            <ChevronDown className="w-4 h-4 text-gray-400" />
+          ) : (
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+          )
+        ) : (
+          <span className="w-4 h-4" />
+        )}
+
+        {/* File/Folder Name */}
+        <span className="text-gray-200 text-2xl">{node.name}</span>
+      </div>
+
+      {/* Children */}
+      {hasChildren && isOpen && (
+        <div className="ml-[16px] border-l border-gray-700">
+          {node.children.map((child, index) => (
+            <TreeNode key={index} node={child} level={level + 1} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default function Blog() {
+  return (
+    <article className="blog active" data-page="about">
       <header>
-        <h2 className="h2 article-title">Blog</h2>
+        <h2 className="h2 article-title">About me</h2>
       </header>
-
-      <section className="blog-posts">
-        <ul className="blog-posts-list">
-          <li className="blog-post-item">
-            <a href="#">
-              <figure className="blog-banner-box">
-                <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy" />
-              </figure>
-
-              <div className="blog-content">
-                <div className="blog-meta">
-                  <p className="blog-category">Design</p>
-
-                  <span className="dot"></span>
-
-                  <time datetime="2022-02-23">Fab 23, 2022</time>
-                </div>
-
-                <h3 className="h3 blog-item-title">Design conferences in 2022</h3>
-
-                <p className="blog-text">Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.</p>
-              </div>
-            </a>
-          </li>
-
-          <li className="blog-post-item">
-            <Link to="/markdown?file=Nodejs-roadmap">
-              <figure className="blog-banner-box">
-                <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy" />
-              </figure>
-
-              <div className="blog-content">
-                <div className="blog-meta">
-                  <p className="blog-category">Nodejs</p>
-
-                  <span className="dot"></span>
-
-                  <time datetime="2022-02-23">Fab 23, 2022</time>
-                </div>
-
-                <h3 className="h3 blog-item-title">Nodejs</h3>
-
-                <p className="blog-text">Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.</p>
-              </div>
-            </Link>
-          </li>
-
-          <li className="blog-post-item">
-            <a href="#">
-              <figure className="blog-banner-box">
-                <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy" />
-              </figure>
-
-              <div className="blog-content">
-                <div className="blog-meta">
-                  <p className="blog-category">Design</p>
-
-                  <span className="dot"></span>
-
-                  <time datetime="2022-02-23">Fab 23, 2022</time>
-                </div>
-
-                <h3 className="h3 blog-item-title">Best fonts every designer</h3>
-
-                <p className="blog-text">Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.</p>
-              </div>
-            </a>
-          </li>
-
-          <li className="blog-post-item">
-            <a href="#">
-              <figure className="blog-banner-box">
-                <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy" />
-              </figure>
-
-              <div className="blog-content">
-                <div className="blog-meta">
-                  <p className="blog-category">Design</p>
-
-                  <span className="dot"></span>
-
-                  <time datetime="2022-02-23">Fab 23, 2022</time>
-                </div>
-
-                <h3 className="h3 blog-item-title">Design digest #80</h3>
-
-                <p className="blog-text">Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.</p>
-              </div>
-            </a>
-          </li>
-
-          <li className="blog-post-item">
-            <a href="#">
-              <figure className="blog-banner-box">
-                <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy" />
-              </figure>
-
-              <div className="blog-content">
-                <div className="blog-meta">
-                  <p className="blog-category">Design</p>
-
-                  <span className="dot"></span>
-
-                  <time datetime="2022-02-23">Fab 23, 2022</time>
-                </div>
-
-                <h3 className="h3 blog-item-title">UI interactions of the week</h3>
-
-                <p className="blog-text">Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.</p>
-              </div>
-            </a>
-          </li>
-
-          <li className="blog-post-item">
-            <a href="#">
-              <figure className="blog-banner-box">
-                <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy" />
-              </figure>
-
-              <div className="blog-content">
-                <div className="blog-meta">
-                  <p className="blog-category">Design</p>
-
-                  <span className="dot"></span>
-
-                  <time datetime="2022-02-23">Fab 23, 2022</time>
-                </div>
-
-                <h3 className="h3 blog-item-title">The forgotten art of spacing</h3>
-
-                <p className="blog-text">Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              </div>
-            </a>
-          </li>
-
-          <li className="blog-post-item">
-            <a href="#">
-              <figure className="blog-banner-box">
-                <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy" />
-              </figure>
-
-              <div className="blog-content">
-                <div className="blog-meta">
-                  <p className="blog-category">Design</p>
-
-                  <span className="dot"></span>
-
-                  <time datetime="2022-02-23">Fab 23, 2022</time>
-                </div>
-
-                <h3 className="h3 blog-item-title">Design digest #79</h3>
-
-                <p className="blog-text">Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.</p>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </section>
+      <div className="text-sm text-gray-200 font-mono">
+        {treeData.map((node, index) => (
+          <TreeNode key={index} node={node} />
+        ))}
+      </div>
     </article>
   );
 }
-
-export default Blog;
